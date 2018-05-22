@@ -1,43 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ef5b0f7c-372c-4327-9c3b-d8c45cd59fc8" name="Default" comment="move">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/dictionary.txt" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/pom.xml" />
+    <list default="true" id="ef5b0f7c-372c-4327-9c3b-d8c45cd59fc8" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/.travis.yml" afterPath="$PROJECT_DIR$/.travis.yml" />
-      <change beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change beforePath="$PROJECT_DIR$/project/.gitignore" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/dictionary.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/pom.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/wl/Application.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/wl/Ladder.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/wl/SRole.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/wl/SUser.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/wl/Wordladder.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/wl/config/ErrorPageConfig.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/wl/config/WebSecurityConfig.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/wl/controller/IndexController.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/wl/repo/SRoleRepository.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/wl/repo/SUserRepository.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/wl/userService/MyUserDetailsService.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/wl/userService/SecuritySUser.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/java/wl/userService/UserService.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/application.yml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/log4j.properties" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/static/js/jquery.min.js" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/403.html" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/hello.html" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/home.html" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/login.html" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/result.html" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/resources/templates/user.html" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/webapp/WEB-INF/spring-security.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/webapp/WEB-INF/web.xml" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/main/webapp/index.jsp" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/project/src/test/java/wl/WordladderTest.java" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -332,7 +297,14 @@
       <option name="project" value="LOCAL" />
       <updated>1526980198374</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="move">
+      <created>1526982300917</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1526982300917</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -341,7 +313,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4206000" />
+    <option name="totallyTimeSpent" value="4253000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-14" y="-14" width="2764" height="1762" extended-state="6" />
