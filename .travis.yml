@@ -1,7 +1,5 @@
 language: java
 
-xcode_workspace: ./project
 
-xcode_scheme: ./project
 jdk:
   - oraclejdk9
