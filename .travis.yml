@@ -1,5 +1,5 @@
 language: java
 
-xcode_project:./project
+xcode_project: ./project
 jdk:
   - oraclejdk9
