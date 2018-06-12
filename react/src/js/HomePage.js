@@ -66,14 +66,12 @@ class HomePage extends React.Component {
             success : function(data) {
                 //TODO 成功
                 alert(" book:"+data.Book+"\n  lan: "+data.Language);
-                _this.setState({searchBook:data.Book});
             },
             error : function(data) {
                 alert("failed");
                 //TODO 失败
             }
         })
-        alert(_this.searchBook);
     }
     onButtonClick(e) {
         this.setState({

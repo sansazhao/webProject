@@ -232,8 +232,9 @@ class Book extends React.Component {
                                 ))}
                             </div>
                             <div style={{marginTop:20}}className="table-operations">
-                                <Button onClick={add}>加入购物车</Button>
-                                <Button onClick={this.getBook}>更新图书</Button>
+                                {localStorage.getItem('user')!==''?
+                                    <Button onClick={add}>加入购物车</Button>:null}
+                                {localStorage.getItem('user')!==''? <Button onClick={this.getBook}>更新图书</Button> : null}
                                 <Button onClick={this.setAgeSort}>按销量排序</Button>
                                 <Button onClick={this.clearFilters}>取消筛选</Button>
                                 <Button onClick={this.clearAll}>取消筛选和排序</Button>
@@ -241,7 +242,7 @@ class Book extends React.Component {
 
                             <div style={{marginTop: 20}}>
                             <Table columns={columns} loading={this.loading} dataSource={data}
-                                   rowSelection={this.rowSelection}
+                                   rowSelection={localStorage.getItem('user')!==''?this.rowSelection:null}
                                    onChange={this.handleChange} size="small"/></div>
                         </div>
                     </Content>
