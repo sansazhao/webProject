@@ -15,12 +15,12 @@ import java.util.List;
 public interface OrderDao extends JpaRepository<Order, Integer> {
 
     @Transactional
+    Order save(Order or);
+
+    @Transactional
     int deleteOrderByOrderid(int id);
 
-    @Query("select o from Order o where o.userid=:userid")
-    List<Order> queryOrderByUserid(@Param("userid")int id);
 
-    @Query("select o from Order o where o.userid=:userid")
-    List<Order> queryOrderByTime(@Param("time")int id);
+
 
 }

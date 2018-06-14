@@ -1,10 +1,12 @@
 package bookstore.service;
 
 import bookstore.dao.BookDao;
+import bookstore.dao.OrderDao;
 import bookstore.dao.UserDao;
 import bookstore.entity.Book;
 import bookstore.dao.CartDao;
 import bookstore.entity.Cart;
+import bookstore.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.query.Param;
@@ -21,9 +23,11 @@ public class CartServiceImpl implements CartService {
     private BookDao bookRepo;
     @Autowired
     private UserDao userRepo;
+    @Autowired
+    private OrderDao orderRepo;
+
 
     public List<Cart> queryByUserid(int id) {
-
         return cartRepo.queryCartByUserid(id);
     }
 
@@ -65,7 +69,24 @@ public class CartServiceImpl implements CartService {
         int uid = userRepo.queryByUsername(username).get(0).getId();
         int pri = 0;
         pri = cartRepo.calSumPrice(uid);
-        System.out.println("sum price："+pri);
+        System.out.println("create order--price：" + pri);
+        Order o = new Order();
+        o.setPrice(pri);
+        o.setUserid(uid);
+        orderRepo.save(o);
+        clearCart(uid);
         return pri;
+    }
+
+    public int previewOrder(String username){
+        int uid = userRepo.queryByUsername(username).get(0).getId();
+        int pri = 0;
+        pri = cartRepo.calSumPrice(uid);
+        System.out.println("previewOrder--price："+pri);
+        return pri;
+    }
+
+    public void clearCart(int uid){
+        cartRepo.deleteCartByUserid(uid);
     }
 }

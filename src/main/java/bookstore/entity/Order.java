@@ -5,13 +5,18 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "order", schema = "test", catalog = "")
+@Table(name = "book_order", schema = "test", catalog = "")
 public class Order {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
     private int orderid;
     private int userid;
-    private Integer price;
+    private int price;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(insertable = false, updatable = false)
     private Timestamp time;
 
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Id
     @Column(name = "orderid", nullable = false)
     public int getOrderid() {
@@ -32,18 +37,17 @@ public class Order {
         this.userid = userid;
     }
 
-    @Basic
-    @Column(name = "price", nullable = true)
-    public Integer getPrice() {
+    @Basic   @Column(name = "price", nullable = false)
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
     @Basic
-    @Column(name = "time", nullable = false)
+    @Column(name = "time", nullable = false, insertable = false,updatable= false)
     public Timestamp getTime() {
         return time;
     }
@@ -65,7 +69,6 @@ public class Order {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(orderid, userid, price, time);
     }
 }

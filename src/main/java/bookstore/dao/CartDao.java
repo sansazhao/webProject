@@ -19,6 +19,9 @@ public interface CartDao extends JpaRepository<Cart, Integer> {
     int deleteCartByBookid(int id);
 
     @Transactional
+    int deleteCartByUserid(int id);
+    
+    @Transactional
     int deleteCartByUseridAndBookid(@Param("userid")int uid,@Param("bookid")int bid);
 
     @Query("select b from Cart b where b.userid=:userid")

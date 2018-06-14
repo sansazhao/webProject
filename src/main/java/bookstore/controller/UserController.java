@@ -14,7 +14,6 @@ import java.io.PrintWriter;
 @Controller
 public class UserController {
     private String userName = "";
-
     @Autowired
     private UserService uService;
 

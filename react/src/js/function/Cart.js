@@ -105,14 +105,6 @@ class CartTable extends React.Component {
         const { store } = this.context;
     }
 
-    handleSwitchColor (color) {
-        const { store } = this.context
-        store.dispatch({
-            type:'SHOW',
-            name: color
-        })
-    }
-
     onCellChange = (name, dataIndex) => {
         return (value) => {
             const dataSource = [...data];
@@ -123,7 +115,6 @@ class CartTable extends React.Component {
             }
         };
     }
-
 
     onDelete = (name) => {
         let _this = this;
@@ -145,29 +136,13 @@ class CartTable extends React.Component {
         });
     }
 
-    sendOrder = () => {
-        $.ajax({
-            type: "post",
-            url: "http://127.0.0.1:8080/cart/createOrder",
-            crossDomain: true,
-            data: {user:localStorage.getItem('user')},  //相当于
-            success: function (_data) {
-                alert("请确认，总计："+_data+"元！");
-            }.bind(this),
-            error: function (data) {
-                console.log("failed");
-                //TODO 失败
-            }
-        });
-    }
-
     showModal = () => {
         this.setState({
             visible: true,
         });
         $.ajax({
             type: "post",
-            url: "http://127.0.0.1:8080/cart/createOrder",
+            url: "http://127.0.0.1:8080/cart/preOrder",
             crossDomain: true,
             data: {user:localStorage.getItem('user')},  //相当于
             success: function (_data) {
@@ -184,22 +159,29 @@ class CartTable extends React.Component {
     }
     handleOk = () => {
         this.setState({
-            confirmLoading: true,
+            visible: false,
         });
-        setTimeout(() => {
-            this.setState({
-                visible: false,
-                confirmLoading: false,
-            });
-        }, 2000);
+        $.ajax({
+            type: "post",
+            url: "http://127.0.0.1:8080/cart/createOrder",
+            crossDomain: true,
+            data: {user:localStorage.getItem('user')},  //相当于
+            success: function (_data) {
+                alert("下单成功！");
+            }.bind(this),
+            error: function (data) {
+                console.log("failed");
+                //TODO 失败
+            }
+        });
 
     }
     handleCancel = () => {
-        console.log('Clicked cancel button');
         this.setState({
             visible: false,
         });
     }
+
     render() {
         const { dataSource,visible, confirmLoading, ModalText } = this.state;
         const columns = this.columns;
@@ -243,7 +225,6 @@ class CartTable extends React.Component {
                             <p>{ModalText}</p>
                         </Modal>
                     </div>
-                    );
                     </Content>
                 </Layout>
             </Layout>

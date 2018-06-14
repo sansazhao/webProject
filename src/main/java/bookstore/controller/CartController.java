@@ -24,7 +24,7 @@ public class CartController {
     private List<Cart> cartBook = new ArrayList<>();
 
     @RequestMapping("/delete")
-    protected void doCartDelete(String user, String book,
+    protected void deleteFromCart(String user, String book,
                                 HttpServletResponse resp) throws ServletException, IOException {
         System.out.println(">>>>>>>>>>doDelete()<<<<<<<<<<<" + book);
         cartService.delete(user,book);
@@ -33,10 +33,17 @@ public class CartController {
     }
 
     @RequestMapping("/createOrder")
-    protected void doCartDelete(String user,
+    protected void createOrder(String user,
                                 HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println(">>>>>>>>>>CreateOrder<<<<<<<<<<<" + user);
         int price = cartService.createOrder(user);
+        PrintWriter out = resp.getWriter();
+        out.println(price);
+    }
+
+    @RequestMapping("/preOrder")
+    protected void preOrder(String user,
+                               HttpServletResponse resp) throws ServletException, IOException {
+        int price = cartService.previewOrder(user);
         PrintWriter out = resp.getWriter();
         out.println(price);
     }
