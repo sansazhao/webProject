@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
-@Configuration
+/*
+//@Configuration
 public class CrossConfig {
     @RequestMapping(method = RequestMethod.OPTIONS)
     public void setHeader(HttpServletResponse response) throws IOException {
@@ -17,3 +17,4 @@ public class CrossConfig {
         response.setHeader("Access-Control-Allow-Origin", "*");
     }
 }
+*/

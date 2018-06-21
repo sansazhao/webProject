@@ -30,8 +30,8 @@ public class UserServiceImpl implements UserService{
         return "user";
     }
 
-    public List<User> findUserByUsername(String name) {
-        return userRepo.queryByUsername(name);
+    public int findUserByUsername(String name) {
+        return userRepo.queryByUsername(name).get(0).getId();
     }
 
     public User create(User SUser) {

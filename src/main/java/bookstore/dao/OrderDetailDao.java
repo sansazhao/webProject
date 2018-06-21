@@ -1,7 +1,7 @@
 package bookstore.dao;
 
-import bookstore.entity.Cart;
 import bookstore.entity.Order;
+import bookstore.entity.OrderDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,15 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-public interface OrderDao extends JpaRepository<Order, Integer> {
+public interface OrderDetailDao extends JpaRepository<OrderDetail, Integer> {
 
     @Transactional
-    Order save(Order or);
+    OrderDetail save(OrderDetail or);
 
-    @Transactional
-    int deleteOrderByOrderid(int id);
-
-    @Query("select b from Order b where b.userid=:userid")
-    List<Order> queryOrderByUserid(@Param("userid")int id);
+    @Query("select b from OrderDetail b where b.orderid=:orderid")
+    List<OrderDetail> queryOrderByOrderid(@Param("orderid")int id);
 
 }

@@ -1,17 +1,15 @@
-import { Table, Input, Icon, Button, Popconfirm, Layout, Menu,Modal } from 'antd';
+import { Table, Input, Icon, Button, Popconfirm, Layout, Menu,Modal,InputNumber } from 'antd';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import {  Link } from "react-router-dom";
-import '../../css/Setting.css';
+import '../../css/HomePage.css';
 import $ from "jquery";
 
 let data=[];
 const { Header, Content, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
-let cname='';
-let temp=[];
-let data1='';
+
 
 function handleClick(e) {
     console.log('click', e);
@@ -26,30 +24,35 @@ class CartTable extends React.Component {
         super();
         this.state = {
             dataSource: [],
-            count: 0,
+            count: 1,
             name:'',
-            ModalText: 'Content of the modal',
+            ModalText: '',
             visible: false,
             confirmLoading: false,
         };
         this.columns = [{
             title: '书名',
             dataIndex: 'name',
-            width: '30%',
+            width: '25%',
         }, {
             title: '数量',
             dataIndex: 'number',
             render: (text, record) => (
-                <EditableCell
-                    value={text}
-                    onChange={this.onCellChange(record.name, 'number')}
+                <InputNumber
+                    min={1} max={30} defaultValue={record.number}
+                    onChange={this.onChange.bind(this,record.name)}
                 />
             ),
         },{
-            title: '价格',
+            title: '单价',
             dataIndex: 'price',
-            width: '30%',
+            width: '20%',
         }, {
+            title: '总计',
+            dataIndex: 'total',
+            width: '20%',
+        },
+            {
             title: '操作',
             dataIndex: 'operation',
             render: (text, record) => {
@@ -63,13 +66,6 @@ class CartTable extends React.Component {
                 );
             },
         }];
-
-        let _this = this;
-        let data1='';
-
-        const { count, dataSource } = this.state;
-
-        _this=this;
         data = [];
         $.ajax({
             type: "get",
@@ -78,19 +74,19 @@ class CartTable extends React.Component {
             async : false,
             contentType: "application/json", //必须有
             dataType: "json", //表示返回值类型，不必须
-            data: {"name":localStorage.getItem('user')},
+            data: {name:localStorage.getItem('user')},
             success: function (_data) {
                 for(var i in _data){
-                    temp = {"name":_data[i].bookname,"number":1,"price":_data[i].bookprice,};
+                    let temp = {"name":_data[i].bookname,"number":_data[i].quantity,"price":_data[i].bookprice,"total":_data[i].bookprice*_data[i].quantity};
                     data.push(temp);
                 }
-                _this.setState({
+                this.setState({
                     dataSource: data,
                 });
                 console.log(data);
             }.bind(this),
-            error : function(_data) {
-                alert("failed");
+            error : function() {
+                console.log("failed");
                 //TODO 失败
             }
         })
@@ -105,16 +101,29 @@ class CartTable extends React.Component {
         const { store } = this.context;
     }
 
-    onCellChange = (name, dataIndex) => {
-        return (value) => {
-            const dataSource = [...data];
-            const target = dataSource.find(item => item.name === name);
-            if (target) {
-                target[dataIndex] = value;
-                data = dataSource;
+    onChange = (name,value) => {
+        console.log(value+ "  "+name);
+        $.ajax({
+            type: "post",
+            url: "http://127.0.0.1:8080/cart/changeQuan",
+            crossDomain: true,
+            data:{user:localStorage.getItem('user'),book:name,q:value},
+            success: function (data1) {
+                data = [];
+                console.log("添加成功" );
+                for(var i in data1){
+                    let temp = {"name":data1[i].bookname,"number":data1[i].quantity,"price":data1[i].bookprice,"total":data1[i].bookprice*data1[i].quantity};
+                    data.push(temp);
+                    console.log(temp);
+                }
+                this.setState({dataSource:data});
+            }.bind(this),
+            error: function () {
+                console.log("failed");
+                //TODO 失败
             }
-        };
-    }
+        });
+    };
 
     onDelete = (name) => {
         let _this = this;
@@ -163,7 +172,7 @@ class CartTable extends React.Component {
         });
         $.ajax({
             type: "post",
-            url: "http://127.0.0.1:8080/cart/createOrder",
+            url: "http://127.0.0.1:8080/order/create",
             crossDomain: true,
             data: {user:localStorage.getItem('user')},  //相当于
             success: function (_data) {
@@ -174,6 +183,7 @@ class CartTable extends React.Component {
                 //TODO 失败
             }
         });
+        window.location.href="/user";
 
     }
     handleCancel = () => {
@@ -184,7 +194,7 @@ class CartTable extends React.Component {
 
     render() {
         const { dataSource,visible, confirmLoading, ModalText } = this.state;
-        const columns = this.columns;
+      //  const columns = this.columns;
         return (
             <Layout>
                 <Header className="header">
@@ -212,7 +222,7 @@ class CartTable extends React.Component {
                 </Sider>
                     <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
                         <div style={{marginTop: 20}}>
-                                <Table bordered dataSource={data} columns={columns} size="small"/>
+                                <Table bordered dataSource={data} columns={this.columns} size="small"/>
                         </div>
                         <Button type="primary" size="large" onClick={this.showModal}>下单</Button>
                         <div>
@@ -228,61 +238,10 @@ class CartTable extends React.Component {
                     </Content>
                 </Layout>
             </Layout>
-
         );
     }
 }
 
-class EditableCell extends React.Component {
-    state = {
-        value: this.props.value,
-        editable: false,
-    }
-    handleChange = (e) => {
-        const value = e.target.value;
-        this.setState({ value });
-    }
-    check = () => {
-        this.setState({ editable: false });
-        if (this.props.onChange) {
-            this.props.onChange(this.state.value);
-        }
-    }
-    edit = () => {
-        this.setState({ editable: true });
-    }
-    render() {
-        const { value, editable } = this.state;
-        return (
-            <div className="editable-cell">
-                {
-                    editable ? (
-                        <Input
-                            value={value}
-                            onChange={this.handleChange}
-                            onPressEnter={this.check}
-                            suffix={
-                                <Icon
-                                    type="check"
-                                    className="editable-cell-icon-check"
-                                    onClick={this.check}
-                                />
-                            }
-                        />
-                    ) : (
-                        <div style={{ paddingRight: 24 }}>
-                            {value || ' '}
-                            <Icon
-                                type="edit"
-                                className="editable-cell-icon"
-                                onClick={this.edit}
-                            />
-                        </div>
-                    )
-                }
-            </div>
-        );
-    }
-}
+
 
 export default CartTable

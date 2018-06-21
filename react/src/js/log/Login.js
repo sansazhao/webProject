@@ -1,7 +1,7 @@
 import React , { Component }from 'react';
 import { Link ,withRouter} from 'react-router-dom';
 import { Form, Icon, Input, Button, Checkbox,message } from 'antd';
-import '../../css/Login.css'
+import '../../css/Setting.css'
 import $ from "jquery";
 import PropTypes from 'prop-types'
 

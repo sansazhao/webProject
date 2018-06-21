@@ -3,12 +3,13 @@ import {  Link } from "react-router-dom";
 import { Layout, Menu,Icon ,notification, Button,Input,Tag} from 'antd';
 import Book from './function/Book';
 import $ from "jquery";
-import PropTypes from 'prop-types'
-
+import PropTypes from 'prop-types';
+import '../css/HomePage.css';
 const { Header, Content, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 const Search = Input.Search;
+
 
 const Notification = () => {
     notification.open({
@@ -45,6 +46,7 @@ class HomePage extends React.Component {
             searchBook:'',
             name: ''
         };
+        localStorage.setItem('user','');
         this.handleChange = this.handleChange.bind(this);
     }
     handleChange(event) {

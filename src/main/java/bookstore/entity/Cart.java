@@ -10,6 +10,7 @@ public class Cart {
     private int userid;
     private int bookid;
     private int bookprice;
+    private int quantity = 1;
     private String bookname;
 
     public Cart(){}
@@ -32,6 +33,16 @@ public class Cart {
 
     public void setBookid(int bookid) {
         this.bookid = bookid;
+    }
+
+    @Basic
+    @Column(name = "quantity", nullable = false)
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     @Basic

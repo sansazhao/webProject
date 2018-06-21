@@ -9,6 +9,7 @@ import java.util.Objects;
 public class OrderDetail {
     private int orderid;
     private int bookid;
+    private int quantity;
 
     @Id
     @Column(name = "orderid", nullable = false)
@@ -28,6 +29,16 @@ public class OrderDetail {
 
     public void setBookid(int bookid) {
         this.bookid = bookid;
+    }
+
+    @Basic
+    @Column(name = "quantity", nullable = false)
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     @Override

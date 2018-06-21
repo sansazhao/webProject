@@ -146,8 +146,9 @@ class UserPage extends React.Component {
                     <Sider width={200} style={{ background: '#ffffff' }}>
                         <Menu onClick={handleClick} style={{ width: 200 }} mode="vertical" >
                             <Menu.Item key="1">
-                                <Link to="/cart" onClick={this.handleSwitchColor.bind(this,localStorage.getItem(''))}><Icon type="shopping-cart" />查看购物车</Link></Menu.Item>
-                            <Menu.Item key="2">
+                                <Link to="/cart" onClick={this.handleSwitchColor.bind(this,localStorage.getItem(''))}><Icon type="shopping-cart" />查看购物车 </Link>
+                                </Menu.Item>
+                       <Menu.Item key="2">
                                 <Link to="/order"><Icon type="clock-circle-o" />查询订单</Link></Menu.Item>
                             <Menu.Item key="3"><Link to="/setting"><Icon type="smile-o" />个人设置</Link></Menu.Item>
                             <Menu.Item key="4"><Link to="/"><Icon type="customer-service" />联系客服</Link></Menu.Item>

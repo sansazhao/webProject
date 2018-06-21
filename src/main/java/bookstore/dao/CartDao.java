@@ -30,7 +30,10 @@ public interface CartDao extends JpaRepository<Cart, Integer> {
     @Query("select c from Cart c where c.userid =:userid and c.bookid =:bookid")
     List<Cart> queryCartByUseridAndBookid(@Param("userid")int uid,@Param("bookid")int bid);
 
-    @Query("select sum(c.bookprice) from Cart c where c.userid =:userid")
+    @Query("select sum(c.bookprice*c.quantity) from Cart c where c.userid =:userid")
     int calSumPrice(@Param("userid")int uid);
+
+    @Query("select sum(c.quantity) from Cart c where c.userid =:userid")
+    int calQuantity(@Param("userid")int uid);
 
 }

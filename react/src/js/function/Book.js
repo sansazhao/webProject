@@ -74,20 +74,18 @@ class Book extends React.Component {
             console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
         },
         onSelect(record, selected, selectedRows) {
-            console.log(record);
+            console.log(record.Book);
             if(selected == true) {
                 $.ajax({
                     type: "post",
-                    url: "http://127.0.0.1:8080/book/select",
+                    url: "http://127.0.0.1:8080/cart/select",
                     crossDomain: true,
-                    data: record,  //相当于
-                    success: function (data) {
-                    },
+                    data: {Book:record.Book,user:localStorage.getItem('user')},  //相当于
                     error: function () {
-                        alert("failed");
+                        console.log("failed");
                         //TODO 失败
                     }
-                });
+                })
             }
             else{
                 $.ajax({
@@ -143,7 +141,7 @@ class Book extends React.Component {
                     sortedInfo: null,
                 });
             }.bind(this),
-            error : function(_data) {
+            error : function() {
                 console.log("failed");
                 //TODO 失败
             }
@@ -242,7 +240,7 @@ class Book extends React.Component {
 
                             <div style={{marginTop: 20}}>
                             <Table columns={columns} loading={this.loading} dataSource={data}
-                                   rowSelection={localStorage.getItem('user')!==''?this.rowSelection:null}
+                                   rowSelection={localStorage.getItem('user')!=='' ? this.rowSelection:null}
                                    onChange={this.handleChange} size="small"/></div>
                         </div>
                     </Content>

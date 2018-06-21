@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Regis from './Regis';
 import { Route, Link } from "react-router-dom";
 import { Layout, Menu,Icon ,Input} from 'antd';
-
 import '../../css/index.css'
 const { Header, Content } = Layout;
 class LoginPage extends React.Component {

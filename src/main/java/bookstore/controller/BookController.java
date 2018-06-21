@@ -2,7 +2,6 @@ package bookstore.controller;
 
 import bookstore.entity.Book;
 import bookstore.service.BookService;
-import bookstore.service.CartService;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +10,6 @@ import javax.json.*;
 import javax.json.stream.JsonGenerator;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -27,8 +25,6 @@ import java.util.Map;
 public class BookController {
     @Autowired
     private BookService bService;
-    @Autowired
-    private CartService cartService;
 
     @RequestMapping("/query")
     protected void doQuery(String key, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,26 +35,8 @@ public class BookController {
         out.print(buildJson(b));
     }
 
-    @RequestMapping("/select")
-    protected void doSelect(String Book, String Author,
-                            String Language, String Published, String Sales, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println(">>>>>>>>>>doSelect()<<<<<<<<<<<" + Book);
-        cartService.add(1, bService.queryByTitle(Book));
-        PrintWriter out = resp.getWriter();
-        out.print(bService.queryByTitle(Book).getPrice());
-    }
-
-    @RequestMapping("/delete")
-    protected void doDelete(String Book, String Author,
-                            String Language, String Published, String Sales,
-                            HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println(">>>>>>>>>>doDelete()<<<<<<<<<<<" + Book);
-        PrintWriter out = resp.getWriter();
-        out.println(Book);
-    }
-
     @RequestMapping("/get")
-    protected void GetBook(String username,HttpServletResponse resp) throws ServletException, IOException {
+    protected void GetBook(HttpServletResponse resp) throws ServletException, IOException {
         System.out.println(">>>>>>>>>>doGETBOOK()<<<<<<<<<<<");
         PrintWriter out = resp.getWriter();
         out.print(buildJsonArr(bService.queryAllBy()));
@@ -97,7 +75,6 @@ public class BookController {
     private JSONArray buildJsonArr(List<Book> b) {
         json_array.clear();
         json_array.addAll(b);
-        System.out.println("1:  " + json_array.toString());
         return json_array;
     }
 

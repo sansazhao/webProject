@@ -20,8 +20,30 @@ import java.util.List;
 public class CartController {
     @Autowired
     private CartService cartService;
+    @Autowired
+    private BookService bService;
+
 
     private List<Cart> cartBook = new ArrayList<>();
+
+    @RequestMapping("/select")
+    protected void doSelect(String Book,String user,HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println(">>>>>>>>>>doSelect()<<<<<<<<<<<" + Book);
+        cartService.add(user, Book, 1);
+        PrintWriter out = resp.getWriter();
+        out.print(bService.queryByTitle(Book).getPrice());
+    }
+
+    @RequestMapping("/changeQuan")
+    protected void changeBookQuantity(String user,String book,int q,HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println(">>>>>>>>>>change quantity<<<<<<<<<<<" + book + q);
+        cartService.add(user,book,q);
+        PrintWriter out = resp.getWriter();
+        cartBook = cartService.queryAllByUserName(user);
+        buildJsonArr(cartBook);
+        out.println(json_array.toString());
+        System.out.println(json_array.toString());
+    }
 
     @RequestMapping("/delete")
     protected void deleteFromCart(String user, String book,

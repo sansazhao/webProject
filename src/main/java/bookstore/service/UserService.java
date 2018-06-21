@@ -1,8 +1,6 @@
 package bookstore.service;
 
-
 import bookstore.entity.User;
-
 import java.util.List;
 
 public interface UserService {
@@ -10,7 +8,7 @@ public interface UserService {
 
     String regis(String name, String password) ;
 
-    List<User> findUserByUsername(String name);
+    int findUserByUsername(String name);
 
     User create(User SUser);
 

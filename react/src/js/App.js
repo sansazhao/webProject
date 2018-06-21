@@ -15,6 +15,7 @@ import createStore from './store/store'
 import themeReducer from './store/reducer'
 import CartTable from "./function/Cart";
 import errorPage from "./ErrorPage";
+import NestedTable from "./function/OrDetail";
 
 const store = createStore(themeReducer)
 
@@ -40,6 +41,7 @@ class App extends React.Component {
                         <Route exact path="/user"  component={UserPage} />
                         <Route exact path="/admin"  component={AdmisPage} />
                         <Route exact path="/order"component={Order} />
+                        <Route exact path="/order1"component={NestedTable} />
                         <Route exact path="/cart" component={CartTable} />
                         <Route path="/booklist" component={BookList} />
                         <Route exact path="/setting" component={Setting}/>

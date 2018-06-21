@@ -1,6 +1,6 @@
 import React , { Component }from 'react';
 import { Form, Input,  Select,  Checkbox, Button, AutoComplete,message } from 'antd';
-import '../../css/Login.css'
+import '../../css/Setting.css'
 import $ from "jquery";
 const FormItem = Form.Item;
 const Option = Select.Option;

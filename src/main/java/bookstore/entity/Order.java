@@ -12,6 +12,7 @@ public class Order {
     private int orderid;
     private int userid;
     private int price;
+    private int quantity;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(insertable = false, updatable = false)
     private Timestamp time;
@@ -44,6 +45,15 @@ public class Order {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    @Basic   @Column(name = "quantity", nullable = false)
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     @Basic
