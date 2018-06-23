@@ -9,14 +9,12 @@ import bookstore.entity.Book;
 
 public interface BookService {
     Book queryById(int id);
-
     Book queryByTitle(String t);
-
     Book create(Book b);
-
     Book update(Book book) ;
-
     List<Book>findByTitleLike(String tit);
-
+    List<Book> findByLang(String lang);
+    List<Book> findByAuthorContains(String author);
     List<Book> queryAllBy();
+    List<Book> modifyStock(Integer bookid,Integer newStock);
 }

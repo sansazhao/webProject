@@ -17,7 +17,7 @@ public interface CartService {
 
     int createOrder(String username);
 
-    int previewOrder(String username);
+    int previewOrderPrice(String username);
 
     void clearCart(int userid);
 }

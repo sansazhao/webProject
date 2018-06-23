@@ -45,7 +45,6 @@ public class CartServiceImpl implements CartService {
         return cartRepo.save(c);
     }
 
-
     public Cart query(String uname,String bname){
         System.out.println("uname: "+uname+"bname: "+bname);
         int uid = userRepo.queryByUsername(uname).get(0).getId();
@@ -85,7 +84,7 @@ public class CartServiceImpl implements CartService {
         return pri;
     }
 
-    public int previewOrder(String username){
+    public int previewOrderPrice(String username){
         int uid = userRepo.queryByUsername(username).get(0).getId();
         int pri = 0;
         pri = cartRepo.calSumPrice(uid);

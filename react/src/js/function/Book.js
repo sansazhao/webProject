@@ -4,31 +4,8 @@ import $ from 'jquery';
 import PropTypes from 'prop-types';
 
 const { Header, Content, Sider } = Layout;
-const MenuItemGroup = Menu.ItemGroup;
-const CheckableTag = Tag.CheckableTag;
-const tagsFromServer = ['Movies', 'Books', 'Music', 'Sports'];
 
-let data = [{
-    Book: 'Dream of the Red Chamber',
-    Author: 'Cao Xueqin',
-    Language: 'Chinese',
-    Published: '1754-1791',
-    Sales:'10 million',
-},{
-    Book: 'She: A History of Adventure',
-    Author: 'H.Rider Haggard',
-    Language: 'English',
-    Published: '1887',
-    Sales:'30 million',
-},];
-
-const add = () => {
-    notification.open({
-        message: '消息提醒',
-              description: '成功添加书籍进入购物车!',
-        icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />,
-    });
-};
+let data = [];
 
 class Book extends React.Component {
     constructor(props) {
@@ -40,17 +17,8 @@ class Book extends React.Component {
             selectedRowKeys: [],
             loading:false,
             selectedTags: [],
-        }
+        };
         this.getBook();
-    }
-    state = {
-        data1: data,
-        filteredInfo: null,
-        sortedInfo: null,
-        selectedRowKeys: [],
-        loading:false,
-        selectedTags: [],
-
     }
     handleChange = (pagination, filters, sorter) => {
         console.log('Various parameters', pagination, filters, sorter);
@@ -68,14 +36,25 @@ class Book extends React.Component {
         console.log('You are interested in: ', nextSelectedTags);
         this.setState({ selectedTags: nextSelectedTags });
     }
+    add = () => {
+        notification.open({
+            message: '消息提醒',
+            description: '成功添加书籍进入购物车!',
+            icon: <Icon type="smile-circle" style={{ color: '#108ee9' }} />,
+        });
+
+    };
 
     rowSelection = {
         onChange(selectedRowKeys, selectedRows) {
             console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
         },
         onSelect(record, selected, selectedRows) {
-            console.log(record.Book);
-            if(selected == true) {
+          //  let i = selectedRows.size();
+            for(let i in selectedRows) {
+                console.log(selectedRows[i].Book);
+            }
+            if(selected === true) {
                 $.ajax({
                     type: "post",
                     url: "http://127.0.0.1:8080/cart/select",
@@ -94,10 +73,10 @@ class Book extends React.Component {
                     crossDomain: true,
                     data: record,
                     success: function (data) {
-                        alert("取消选择书本:" + data);
+                        console.log("取消选择书本:" + data);
                     },
                     error: function () {
-                        alert("failed");
+                        console.log("failed");
                         //TODO 失败
                     }
                 });
@@ -143,10 +122,9 @@ class Book extends React.Component {
             }.bind(this),
             error : function() {
                 console.log("failed");
-                //TODO 失败
             }
         })
-    }
+    };
 
     setAgeSort = () => {
         this.setState({
@@ -155,7 +133,7 @@ class Book extends React.Component {
                 columnKey: 'Sales',
             },
         });
-    }
+    };
     render() {
         let { sortedInfo, filteredInfo,data1 } = this.state;
         const { selectedTags } = this.state;
@@ -218,21 +196,9 @@ class Book extends React.Component {
                     <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
                         <div>
                             <div style={{marginTop:10}}>
-                                <h3 style={{ marginRight: 8, display: 'inline' }}>Categories:</h3>
-                                {tagsFromServer.map(tag => (
-                                    <CheckableTag style={{marginRight: 8, display: 'inline'}}
-                                                  key={tag}
-                                                  checked={selectedTags.indexOf(tag) > -1}
-                                                  onChange={checked => this.handleChange1(tag, checked)}
-                                    >
-                                        {tag}
-                                    </CheckableTag>
-                                ))}
+
                             </div>
                             <div style={{marginTop:20}}className="table-operations">
-                                {localStorage.getItem('user')!==''?
-                                    <Button onClick={add}>加入购物车</Button>:null}
-                                {localStorage.getItem('user')!==''? <Button onClick={this.getBook}>更新图书</Button> : null}
                                 <Button onClick={this.setAgeSort}>按销量排序</Button>
                                 <Button onClick={this.clearFilters}>取消筛选</Button>
                                 <Button onClick={this.clearAll}>取消筛选和排序</Button>
@@ -242,6 +208,8 @@ class Book extends React.Component {
                             <Table columns={columns} loading={this.loading} dataSource={data}
                                    rowSelection={localStorage.getItem('user')!=='' ? this.rowSelection:null}
                                    onChange={this.handleChange} size="small"/></div>
+                            {localStorage.getItem('user')!==''?
+                                <Button onClick={this.add} type="primary" style={{marginLeft:300}}>加入购物车</Button>:null}
                         </div>
                     </Content>
                 </Layout>

@@ -172,7 +172,7 @@ class CartTable extends React.Component {
         });
         $.ajax({
             type: "post",
-            url: "http://127.0.0.1:8080/order/create",
+            url: "http://127.0.0.1:8080/cart/createOrder",
             crossDomain: true,
             data: {user:localStorage.getItem('user')},  //相当于
             success: function (_data) {

@@ -27,4 +27,13 @@ public interface BookDao extends JpaRepository<Book, Integer> {
     @Query("select u from Book u")
     List<Book> queryAllBy();
 
+   // List<Book> findByTitleContainsAndAuthorContainsAndLanguageContainsAndPriceBetweenAndAndYearBetween
+//            (String bookname, String author, String lang,Integer down_price, Integer up_price, Integer down_year, Integer up_year);
+
+  //  List<Book> findByTitleContains(String title);
+
+    List<Book> queryByAuthorContains(String auther);
+
+    List<Book> queryByLanguage(String language);
+
 }

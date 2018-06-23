@@ -10,9 +10,17 @@ public interface UserService {
 
     int findUserByUsername(String name);
 
+    void stop(Integer uid);
+
+    void recover(Integer uid);
+
     User create(User SUser);
 
     User update(User SUser);
 
-    List<User> findAll();
+    List<String> findAll();
+
+    void addPicture(String name,String bin);
+
+    String getPicture(String name);
 }

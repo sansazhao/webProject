@@ -10,6 +10,7 @@ public class User {
     private String username;
     private String role;
     private String password;
+    private int avail;
     
     @Id
     @Column(name = "id", nullable = false, precision = 0)
@@ -49,6 +50,16 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Basic
+    @Column(name = "avail", nullable = false)
+    public int getAvail() {
+        return avail;
+    }
+
+    public void setAvail(int avail) {
+        this.avail = avail;
     }
 
 

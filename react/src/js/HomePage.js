@@ -1,6 +1,7 @@
 import React , { Component }from 'react';
 import {  Link } from "react-router-dom";
-import { Layout, Menu,Icon ,notification, Button,Input,Tag} from 'antd';
+import { Layout, Menu,Icon ,notification, Button,Input,Tag,
+    Upload, message, Modal ,} from 'antd';
 import Book from './function/Book';
 import $ from "jquery";
 import PropTypes from 'prop-types';
@@ -44,9 +45,14 @@ class HomePage extends React.Component {
             val: '',
             arr: [],
             searchBook:'',
-            name: ''
+            name: '',
+            loading: false,
+            previewVisible: false,
+            previewImage: '',
+            fileList: [],
         };
         localStorage.setItem('user','');
+        localStorage.setItem('auth','false');
         this.handleChange = this.handleChange.bind(this);
     }
     handleChange(event) {
@@ -63,14 +69,14 @@ class HomePage extends React.Component {
             url : 'http://127.0.0.1:8080/book/query',
             type:'post',
             dataType:"json",
+            async:false,
             data:{key:v},
             crossDomain: true,
             success : function(data) {
                 //TODO 成功
-                alert(" book:"+data.Book+"\n  lan: "+data.Language);
+                console.log(" book");
             },
             error : function(data) {
-                alert("failed");
                 //TODO 失败
             }
         })
@@ -80,13 +86,22 @@ class HomePage extends React.Component {
             val: e.target.value
         })
         let val = this.state.val;
-        alert('A name was submitted: ' + this.state.val);
         this.setState({
             arr: [val, ...this.state.arr]
         })
     }
 
+
+
     render() {
+        const { previewVisible, previewImage, fileList } = this.state;
+        const imageUrl = this.state.imageUrl;
+        const uploadButton = (
+            <div>
+                <Icon type="plus" />
+                <div className="ant-upload-text">Upload</div>
+            </div>
+        );
         return (
             <Layout>
                 <Header className="header">
@@ -111,6 +126,7 @@ class HomePage extends React.Component {
                 </Header>
                 <Layout>
                     <Book></Book>
+
                 </Layout>
             </Layout>
         );

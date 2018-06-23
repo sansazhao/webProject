@@ -23,4 +23,7 @@ public interface OrderDao extends JpaRepository<Order, Integer> {
     @Query("select b from Order b where b.userid=:userid")
     List<Order> queryOrderByUserid(@Param("userid")int id);
 
+    @Query("select sum(b.price) from Order b")
+    int queryTotal();
+
 }

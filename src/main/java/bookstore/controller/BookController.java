@@ -2,14 +2,13 @@ package bookstore.controller;
 
 import bookstore.entity.Book;
 import bookstore.service.BookService;
+import bookstore.service.UserService;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import javax.json.*;
 import javax.json.stream.JsonGenerator;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,28 +18,31 @@ import java.util.List;
 import java.util.Map;
 
 @CrossOrigin("http://localhost:3000")
-@Controller
-@WebServlet
+@RestController
 @RequestMapping("/book")
 public class BookController {
     @Autowired
     private BookService bService;
+    @Autowired
+    private UserService uService;
+
 
     @RequestMapping("/query")
-    protected void doQuery(String key, HttpServletResponse resp) throws ServletException, IOException {
-        PrintWriter out = resp.getWriter();
-        System.out.println("query : " + key);
-        Book b = bService.findByTitleLike(key).get(0);
-        System.out.println(buildJson(b));
-        out.print(buildJson(b));
+    protected String doQuery(String key, HttpServletResponse resp) throws IOException {
+       // PrintWriter out = resp.getWriter();
+        String p = uService.getPicture("book6");
+       // Book b = bService.findByTitleLike(key).get(0);
+        //System.out.println(buildJson(b));
+        return p;
+     //   out.print(buildJson(b));
     }
 
     @RequestMapping("/get")
-    protected void GetBook(HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println(">>>>>>>>>>doGETBOOK()<<<<<<<<<<<");
-        PrintWriter out = resp.getWriter();
-        out.print(buildJsonArr(bService.queryAllBy()));
+    protected JSONArray GetBook(){
+        List<Book> books = bService.queryAllBy();
+        return JSONArray.fromObject(books);
     }
+
 
     private String buildJson(Book b) {
         /* Build JSON Object Model */

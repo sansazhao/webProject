@@ -9,5 +9,7 @@ public interface OrderService {
 
     List<String> queryOrder(String username);
 
-    List<String> queryOrderDetail(String username,int orderid);
+    List<String> queryOrderDetail(Integer orderid);
+
+    List<String> queryTotalSale();
 }

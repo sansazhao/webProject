@@ -11,55 +11,26 @@ function handleClick(e) {
     console.log('click', e);
 }
 
-
 class Order extends React.Component {
     constructor() {
         super();
         this.state = {
             dataSource: [],
             filterDropdownVisible: false,
+            sortedInfo: null,
             data,
             searchText: '',
             filtered: false,
         };
-        this.columns = [{
-            title: '订单号',
-            dataIndex: 'id',
-            width: '25%',
-        }, {
-            title: '数量',
-            dataIndex: 'number',
-        },{
-            title: '交易额',
-            dataIndex: 'price',
-            width: '20%',
-        }, {
-            title: '下单时间',
-            dataIndex: 'time',
-            width: '20%',
-        },
-            {
-                title: '操作',
-                dataIndex: 'operation',
-                render: (text, record) => {
-                    return (
-                        this.state.dataSource.length >= 0 ?
-                            (
-                                <Popconfirm title="确定将该书移出购物车?" onConfirm={() => this.onDelete(record.name)}>
-                                    <a href="javascript:;">查看</a>
-                                </Popconfirm>
-                            ) : null
-                    );
-                },
-            }];
+
         data = [];
         $.ajax({
             type: "get",
             url: "http://127.0.0.1:8080/order/get",
             crossDomain: true,
             async : false,
-            contentType: "application/json", //必须有
-            dataType: "json", //表示返回值类型，不必须
+            contentType: "application/json",
+            dataType: "json",
             data: {name:localStorage.getItem('user')},
             success: function (_data) {
                 console.log(_data);
@@ -80,32 +51,55 @@ class Order extends React.Component {
     onInputChange = (e) => {
         this.setState({ searchText: e.target.value });
     }
-    onSearch = () => {
-        const { searchText } = this.state;
-        const reg = new RegExp(searchText, 'gi');
+    detail = (record) =>{
+        localStorage.setItem('detailid',record.id);
+        window.location.href = "/detail";
+    }
+    setAgeSort = () => {
         this.setState({
-            filterDropdownVisible: false,
-            filtered: !!searchText,
-            data: data.map((record) => {
-                const match = record.name.match(reg);
-                if (!match) {
-                    return null;
-                }
-                return {
-                    ...record,
-                    name: (
-                        <span>
-              {record.name.split(new RegExp(`(?<=${searchText})|(?=${searchText})`, 'i')).map((text, i) => (
-                  text.toLowerCase() === searchText.toLowerCase() ?
-                      <span key={i} className="highlight">{text}</span> : text // eslint-disable-line
-              ))}
-            </span>
-                    ),
-                };
-            }).filter(record => !!record),
+            sortedInfo: {
+                order: 'descend',
+                columnKey: 'Sales',
+            },
         });
     }
     render() {
+        let { sortedInfo } = this.state;
+        sortedInfo = sortedInfo || {};
+        const columns = [{
+            title: '订单号',
+            dataIndex: 'id',
+            key:'id',
+            width: '20%',
+            render: text => <a href="#">{text}</a>,
+            sorter: (a, b) => a.id - b.id,
+        }, {
+            title: '数量',
+            dataIndex: 'number',
+            width: '20%',
+        },{
+            title: '交易额',
+            dataIndex: 'price',
+            width: '20%',
+            render: text => <a href="#">{text}</a>,
+            sorter: (a, b) => a.price.split('元')[0] - b.price.split('元')[0],
+        }, {
+            title: '下单时间',
+            dataIndex: 'time',
+            width: '25%',
+            render: text => <a href="#">{text}</a>,
+            sorter: (a, b) => a.id - b.id,
+        },
+            {
+                title: '操作',
+                dataIndex: 'operation',
+                render: (text, record) => {
+                    return (
+                        <Button type="primary" onClick={()=>this.detail(record)}>查看详情</Button>
+                    );
+                },
+            }];
+
         return (
             <Layout>
                 <Header className="header">
@@ -135,7 +129,7 @@ class Order extends React.Component {
                     </Sider>
                     <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
                         <div style={{marginTop: 20}}>
-                            <Table columns={this.columns}
+                            <Table columns={columns}
                                    bordered
                                    title={() => '全部订单'}
                                    footer={() => ''}

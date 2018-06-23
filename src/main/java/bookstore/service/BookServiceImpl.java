@@ -35,9 +35,22 @@ public class BookServiceImpl implements BookService{
         return bookRepo.findByTitleLike(tit);
     }
 
+    public List<Book> findByLang(String lang){
+        return bookRepo.queryByLanguage(lang);
+    }
+
+    public List<Book> findByAuthorContains(String author){
+        return bookRepo.queryByAuthorContains(author);
+    }
     public List<Book> queryAllBy(){
         List<Book> list = bookRepo.queryAllBy();
         System.out.println(list.size());
         return list;
+    }
+    public List<Book> modifyStock(Integer bid,Integer newStock){
+        Book b= bookRepo.queryById(bid).get(0);
+        b.setStock(newStock);
+        update(b);
+        return bookRepo.queryAllBy();
     }
 }

@@ -50,14 +50,19 @@ public class OrderServiceImpl  implements OrderService  {
         return os;
     }
 
-    public List<String> queryOrderDetail(String uname,int index){
+    public List<String> queryOrderDetail(Integer id){
         List<String> os  = new ArrayList<>();
-        int uid = userRepo.queryByUsername(uname).get(0).getId();
-        List<Order> o = orderRepo.queryOrderByUserid(uid);
-        System.out.println(o.size()+"aaa"+o.get(0).getTime());
-        int oid = o.get(index).getOrderid();
-        List<OrderDetail> od = orDetailRepo.queryOrderByOrderid(oid);
-        for (OrderDetail item: od){
+        List<OrderDetail> o = orDetailRepo.queryOrderByOrderid(id);
+        for (OrderDetail item: o){
+            os.add(buildJson(item));
+        }
+        return os;
+    }
+
+    public List<String> queryTotalSale(){
+        List<Order> o = orderRepo.findAll();
+        List<String> os = new ArrayList<>();
+        for (Order item: o){
             os.add(buildJson(item));
         }
         return os;

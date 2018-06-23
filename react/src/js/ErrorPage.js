@@ -9,7 +9,7 @@ const onClose = function (e) {
 class errorPage extends React.Component {
     render() {
         return (
-            <div>
+            <div style={{marginTop: 200}}>
                 <Alert
                     message="您好！您尚无权限访问该页面！请关闭对话框，返回首页"
                     type="warning"

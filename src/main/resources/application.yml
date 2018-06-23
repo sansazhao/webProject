@@ -8,10 +8,7 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-  thymeleaf:
-      encoding: UTF-8
-      mode: HTML5
-      prefix: classpath:/templates/
-      suffix: .html
-      check-template: true
-      cache: false
+  data:
+    mongodb:
+      database: bookstore
+      uri: mongodb://127.0.0.1:27017

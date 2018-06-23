@@ -71,8 +71,11 @@ class NormalLoginForm extends React.Component {
                             window.location.href = "/user";
                             console.log(_this.name);
                         }
-                        else if(data == "admin")
+                        else if(data == "admin") {
+                            localStorage.setItem('auth','admin');
+                            localStorage.setItem('user',_this.name);
                             window.location.href = "/admin";
+                        }
                         else{}
                     }.bind(this),
                     error : function(data) {

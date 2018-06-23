@@ -13,6 +13,7 @@ public class Book {
     private String published;
     private String sales;
     private int price;
+    private int stock;
 
     @Id
     @Column(name = "id", nullable = false, precision = 0)
@@ -72,6 +73,16 @@ public class Book {
 
     public void setSales(String sales) {
         this.sales = sales;
+    }
+
+    @Basic
+    @Column(name = "stock", nullable = false, length = 20)
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     @Basic
